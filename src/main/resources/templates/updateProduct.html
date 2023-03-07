@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layouts/defaultTemplate">
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="${title}">Default Title</title>
+
+</head>
+
+<body>
+	<div layout:fragment="content" class="centerText">
+        <h1 th:text="${title}">Default Title</h1>
+		<form action="#" th:action="@{doUpdateProduct}" th:object="${productModel}" method="post">
+			<div class="form-group">
+				<div class="form-row row">
+					<div class="col-md-3"></div>
+					<div class="form-group col-md-3">
+						<label>Food Name</label>
+						<h5 class="errorMessage" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Food Name Error</h5>
+						<input type="text" class="form-control centerText" th:field="*{name}">
+					</div>
+					<div class="form-group col-md-3">
+						<label>Food Type</label>
+						<h5 class="errorMessage" th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Food Type Error</h5>
+						<input type="text" class="form-control centerText" th:field="*{type}">
+					</div>
+					<div class="form-group col-md-3"></div>
+				</div>
+				<div class="form-row row">
+					<div class="col-md-3"></div>
+					<div class="form-group col-md-3">
+						<label>Price</label>
+						<h5 class="errorMessage" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</h5>
+						<input type="text" class="form-control centerText" th:field="*{price}">
+					</div>
+					<div class="form-group col-md-3">
+						<label>Image Address</label>
+						<h5 class="errorMessage" th:if="${#fields.hasErrors('image')}" th:errors="*{image}">Image Address Error</h5>
+						<input type="text" class="form-control centerText" th:field="*{image}">
+					</div>
+					<div class="col-md-3"></div>
+				</div>
+				<div class="form-row row">
+					<div class="col-md-3"></div>
+					<div class="form-group col-md-3">
+						<label>Description</label>
+						<h5 class="errorMessage" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</h5>
+						<input type="text" class="form-control centerText" th:field="*{description}">
+					</div>
+				</div>
+				
+				<!-- hide field with product id value so it can be used later -->
+				<input type="hidden" th:field="*{productId}" >
+				
+				<div class="col-md-9">
+					<button type="submit" class="btn btn-primary pull-right">Submit</button>
+				</div>
+
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>
