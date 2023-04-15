@@ -2,6 +2,8 @@ package com.gcu.controller;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,8 @@ public class RegistrationController {
 	@Autowired
 	private UserBusinessServiceInterface service;
 
+    
+	Logger logger = LoggerFactory.getLogger(RegistrationController.class);
     /**
      * Method for displaying the Registration Form
      * @param model is passed in so that attributes can be added to it
@@ -36,6 +40,8 @@ public class RegistrationController {
      */
     @GetMapping("/")
     public String display(Model model) {
+        
+		logger.trace("RegistrationController display");
         model.addAttribute("title", "Registration Form");
         model.addAttribute("userModel", new UserModel());
         return "register";
@@ -53,6 +59,7 @@ public class RegistrationController {
     @PostMapping("/doRegister")
     public String doRegister(@Valid UserModel userModel, BindingResult bindingResult, Model model, RedirectAttributes redirectAttrs) throws DatabaseException {
         
+		logger.trace("RegistrationController doRegister");
         // Checks for errors in registration form     
         if(bindingResult.hasErrors()) {
             System.out.println(bindingResult);
