@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,8 @@ import com.gcu.util.DatabaseException;
 @RequestMapping("/products")
 public class ProductController {
 
+	
+	Logger logger = LoggerFactory.getLogger(ProductController.class);
 	/**
 	 * injects the product business service interface
 	 */
@@ -43,6 +47,8 @@ public class ProductController {
 	 */
 	@GetMapping("/")
 	public String display(Model model, @ModelAttribute("successMessage") String flashAttribute) throws DatabaseException {
+		
+		logger.trace("ProductController Display");
 		//Get hardcoded list of products
 		List<ProductModel> products = service.getProducts();
 		
@@ -61,6 +67,8 @@ public class ProductController {
 	@PostMapping("/addProduct")
 	public String addProduct(Model model)
 	{
+		
+		logger.trace("ProductController addProduct");
 //	    setup model attributes for add product
 		model.addAttribute("title", "Add Product Page");
 		model.addAttribute("productModel", new ProductModel());
@@ -77,6 +85,8 @@ public class ProductController {
 	@PostMapping("/updateProduct")
 	public String updateProduct(@RequestParam(value = "update") int productId, Model model) throws DatabaseException
 	{
+		
+		logger.trace("ProductController updateProduct");
 		model.addAttribute("title", "Update Product Page");
 		// finds the product that the user would like to update and passes it in as an attribute
 		ProductModel product = service.getProductById(productId);
@@ -94,6 +104,8 @@ public class ProductController {
 	@PostMapping("/viewProduct")
 	public String viewProduct(@RequestParam(value = "view") int productId, Model model) throws DatabaseException
 	{
+		
+		logger.trace("ProductController viewProduct");
 		model.addAttribute("title", "View Product Page");
 		// Finds the product that the user wants to view and passes it in as an attribute to the view product page
 		ProductModel product = service.getProductById(productId);
@@ -112,6 +124,8 @@ public class ProductController {
 	@PostMapping("/doAddProduct")
     public String doAddProduct(@Valid ProductModel productModel, BindingResult bindingResult, Model model) throws DatabaseException
 	{
+		
+		logger.trace("ProductController doAddProduct");
 //      Checks for errors in form data for add product
         if(bindingResult.hasErrors()) {
             System.out.println(bindingResult);
@@ -147,6 +161,8 @@ public class ProductController {
 	@PostMapping("/doUpdateProduct")
     public String doUpdateProduct(@Valid ProductModel productModel, BindingResult bindingResult, Model model) throws DatabaseException
 	{
+		
+		logger.trace("ProductController doUpdateProduct");
 //      Checks for errors in form data for update product
         if(bindingResult.hasErrors()) {
             System.out.println(bindingResult);
@@ -180,6 +196,8 @@ public class ProductController {
 	 */
 	@PostMapping("/deleteProduct")
 	public String deleteProduct(@RequestParam(value = "delete") int productId, Model model) throws DatabaseException {
+		
+		logger.trace("ProductController deleteProduct");
 		//Catch from the popup confirm in products.html
 		if(productId != -1) {
 			System.out.println("Deleting " + productId);
